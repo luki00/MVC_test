@@ -13,59 +13,41 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Photo1)
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Photo2)
+            Tytuł:
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Photo3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photo4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
+            Cena:
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
+    @foreach (var item in Model)
+    {
+        <tr onclick="window.location='@Url.Action("Details", new { id=item.ArticleId })';">
+            <td>
+                @Html.DisplayFor(modelItem => item.Photo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+                zł
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ArticleId })
 
-            @Html.DisplayFor(modelItem => item.Photo1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 
 </table>
+
+<script>
+    $("#container").on('click-row.bs.table', function (e, row, $element) {
+        window.location = $element.data('href');
+    });
+</script>

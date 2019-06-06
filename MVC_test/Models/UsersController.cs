@@ -7,116 +7,136 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC_test.Database;
-using MVC_test.Models;
 
-namespace MVC_test.Controllers
+namespace MVC_test.Models
 {
-    public class ArticlesController : Controller
+    public class UsersController : Controller
     {
-
-        
-
-
-
         private Context db = new Context();
 
-        // GET: Articles
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Articles.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Articles/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(user);
         }
 
-        // GET: Articles/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Articles/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ArticleId,Photo1,Photo2,Photo3,Photo4,Title,Description,Price")] Article article)
+        public ActionResult Create([Bind(Include = "UserId,Login,Name,Last_name,Password,Birth_date,Photo")] User user)
         {
+            /*
+             HttpPostedFileBase file = user.Photo;
+
+                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                {
+                    string fileName = file.FileName;
+                    string fileContentType = file.ContentType;
+                    byte[] fileBytes = new byte[file.ContentLength];
+                    file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                }
+
+                var nowy = new User()
+                    {
+                        UserId = user.UserId,
+                        Login = user.Login,
+                        Name = user.Name,
+                        Last_name = user.Last_name,
+                        Password = user.Password,
+                        Birth_date = user.Birth_date,
+                        Photo = file
+                    };
+                    db.Users.Add(nowy);
+                    //db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+             */
+
             if (ModelState.IsValid)
             {
-                db.Articles.Add(article);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(article);
+            return View(user);
         }
 
-        // GET: Articles/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(user);
         }
 
-        // POST: Articles/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ArticleId,Photo1,Photo2,Photo3,Photo4,Title,Description,Price")] Article article)
+        public ActionResult Edit([Bind(Include = "UserId,Login,Name,Last_name,Password,Birth_date,Photo")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(article).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(article);
+            return View(user);
         }
 
-        // GET: Articles/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(article);
+            return View(user);
         }
 
-        // POST: Articles/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Article article = db.Articles.Find(id);
-            db.Articles.Remove(article);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
